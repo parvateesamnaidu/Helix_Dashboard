@@ -15,13 +15,15 @@ import {
   Info,
   CheckCircle2,
   AlertTriangle,
+  Film,
 } from 'lucide-react';
 
 interface HeaderProps {
   onOpenOAuthModal: () => void;
+  onOpenVideo?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenOAuthModal }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenOAuthModal, onOpenVideo }) => {
   const {
     currentUser,
     currentSession,
@@ -126,6 +128,19 @@ export const Header: React.FC<HeaderProps> = ({ onOpenOAuthModal }) => {
             <span className="hidden sm:inline text-slate-400">Timeout:</span>
             <span className="text-amber-300 font-semibold">{formatCountdown(sessionTimeRemainingSeconds)}</span>
           </div>
+
+          {/* Explainer Video Shortcut */}
+          {onOpenVideo && (
+            <button
+              onClick={onOpenVideo}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-950/80 hover:bg-purple-900 border border-purple-700/60 text-purple-200 text-xs font-medium transition shadow-sm"
+              title="Watch Animated Explainer Video"
+            >
+              <Film className="w-3.5 h-3.5 text-purple-400" />
+              <span className="hidden sm:inline">Explainer</span>
+              <span>Video</span>
+            </button>
+          )}
 
           {/* OAuth Setup & Configuration */}
           <button

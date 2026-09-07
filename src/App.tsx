@@ -11,21 +11,26 @@ import { ColdChainView } from './views/ColdChainView';
 import { ChainOfIdentityView } from './views/ChainOfIdentityView';
 import { GoldenScenarioLabView } from './views/GoldenScenarioLabView';
 import { AuditTrailView } from './views/AuditTrailView';
+import { AnimatedExplainerVideoView } from './views/AnimatedExplainerVideoView';
 
 function WorkbenchMain() {
-  const [activeTab, setActiveTab] = useState<TabId>('batches');
+  const [activeTab, setActiveTab] = useState<TabId>('video');
   const [isOAuthModalOpen, setIsOAuthModalOpen] = useState<boolean>(false);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300">
       {/* Top Application Header with Role Switcher & OAuth status */}
-      <Header onOpenOAuthModal={() => setIsOAuthModalOpen(true)} />
+      <Header
+        onOpenOAuthModal={() => setIsOAuthModalOpen(true)}
+        onOpenVideo={() => setActiveTab('video')}
+      />
 
       {/* Primary Section Navigation Tabs */}
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Main View Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6">
+        {activeTab === 'video' && <AnimatedExplainerVideoView onNavigateToTab={setActiveTab} />}
         {activeTab === 'batches' && <LiveBatchOperationsView />}
         {activeTab === 'hitl' && <HitlApprovalQueueView />}
         {activeTab === 'sessions' && <ActiveSessionsView />}
