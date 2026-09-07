@@ -51,7 +51,7 @@ export const HitlApprovalQueueView: React.FC = () => {
     }
   };
 
-  const pendingCount = recommendations.filter((r) => r.status === 'PENDING_REVIEW').length;
+  const pendingCount = (recommendations || []).filter((r) => r.status === 'PENDING_REVIEW').length;
 
   return (
     <div className="space-y-6">

@@ -20,7 +20,7 @@ export const GoldenScenarioLabView: React.FC = () => {
   const [filterCategory, setFilterCategory] = useState<string>('ALL');
   const [selectedScenarioForLogs, setSelectedScenarioForLogs] = useState<GoldenScenario | null>(null);
 
-  const passedCount = scenarios.filter((s) => s.status === 'PASSED').length;
+  const passedCount = (scenarios || []).filter((s) => s.status === 'PASSED').length;
 
   const hardGates: { id: string; name: string; target: string; status: 'PASS' | 'PENDING' }[] = [
     { id: 'HG-01', name: 'Zero Autonomous Final Decisions', target: 'autonomous_decisions = 0', status: 'PASS' },

@@ -260,7 +260,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const terminateAllOtherSessions = async () => {
-    const others = activeSessions.filter((s) => s.id !== currentSession?.id);
+    const others = (activeSessions || []).filter((s) => s.id !== currentSession?.id);
     for (const s of others) {
       await terminateSession(s.id);
     }

@@ -294,7 +294,7 @@ export const LiveBatchOperationsView: React.FC = () => {
             </p>
           </div>
           <span className="text-xs font-mono bg-slate-950 px-2.5 py-1 rounded border border-slate-800 text-slate-300">
-            Pass Rate: {selectedBatch.qcResults.filter((q) => q.status === 'PASS').length} / {selectedBatch.qcResults.length} Assays
+            Pass Rate: {(selectedBatch?.qcResults || []).filter((q) => q.status === 'PASS').length} / {(selectedBatch?.qcResults || []).length} Assays
           </span>
         </div>
 
@@ -311,7 +311,7 @@ export const LiveBatchOperationsView: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60 font-sans">
-              {selectedBatch.qcResults.map((qc) => (
+              {(selectedBatch?.qcResults || []).map((qc) => (
                 <tr key={qc.id} className="hover:bg-slate-800/40 transition">
                   <td className="py-2.5 px-3">
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">

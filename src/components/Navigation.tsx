@@ -23,19 +23,12 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
   const { recommendations, batches } = useWorkbench();
   const { activeSessions } = useAuth();
 
-  const pendingApprovalsCount = recommendations.filter((r) => r.status === 'PENDING_REVIEW').length;
-  const activeBatchesCount = batches.length;
-  const activeSessionsCount = activeSessions.filter((s) => s.status === 'ACTIVE').length;
-  const coiAlertsCount = batches.filter((b) => b.coiStatus !== 'UNBROKEN').length;
+  const pendingApprovalsCount = (recommendations || []).filter((r) => r.status === 'PENDING_REVIEW').length;
+  const activeBatchesCount = (batches || []).length;
+  const activeSessionsCount = (activeSessions || []).filter((s) => s.status === 'ACTIVE').length;
+  const coiAlertsCount = (batches || []).filter((b) => b.coiStatus !== 'UNBROKEN').length;
 
   const tabs: { id: TabId; label: string; icon: React.FC<{ className?: string }>; badge?: string | number; badgeColor?: string }[] = [
-    {
-      id: 'video',
-      label: 'Explainer Video',
-      icon: Film,
-      badge: '5 MIN',
-      badgeColor: 'bg-purple-900/80 text-purple-200 border border-purple-600/50',
-    },
     {
       id: 'batches',
       label: 'Batch Operations',
@@ -80,6 +73,13 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
       id: 'audit',
       label: '21 CFR Part 11 Audit',
       icon: ScrollText,
+    },
+    {
+      id: 'video',
+      label: 'Explainer Video',
+      icon: Film,
+      badge: '5 MIN',
+      badgeColor: 'bg-purple-900/80 text-purple-200 border border-purple-600/50',
     },
   ];
 

@@ -22,6 +22,7 @@ interface WorkbenchContextType {
   patients: Patient[];
   recommendations: HitlRecommendation[];
   auditTrail: AuditLogEntry[];
+  auditLogs: AuditLogEntry[];
   scenarios: GoldenScenario[];
   isAiServiceOnline: boolean;
   isOfflineMode: boolean;
@@ -537,6 +538,7 @@ export const WorkbenchProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         patients,
         recommendations,
         auditTrail,
+        auditLogs: auditTrail,
         scenarios,
         isAiServiceOnline,
         isOfflineMode,

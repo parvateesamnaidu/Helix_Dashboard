@@ -43,9 +43,9 @@ export const ActiveSessionsView: React.FC = () => {
     setTimeout(() => setIsRefreshing(false), 500);
   };
 
-  const totalActive = activeSessions.filter((s) => s.status === 'ACTIVE').length;
-  const totalIdle = activeSessions.filter((s) => s.status === 'IDLE').length;
-  const totalRevoked = activeSessions.filter((s) => s.status === 'REVOKED').length;
+  const totalActive = (activeSessions || []).filter((s) => s.status === 'ACTIVE').length;
+  const totalIdle = (activeSessions || []).filter((s) => s.status === 'IDLE').length;
+  const totalRevoked = (activeSessions || []).filter((s) => s.status === 'REVOKED').length;
 
   const getDeviceIcon = (device: string) => {
     if (device.toLowerCase().includes('ipad') || device.toLowerCase().includes('tablet')) {

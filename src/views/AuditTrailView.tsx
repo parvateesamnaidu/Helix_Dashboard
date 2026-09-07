@@ -15,26 +15,32 @@ import {
 import { AuditLogEntry } from '../types';
 
 export const AuditTrailView: React.FC = () => {
-  const { auditLogs } = useWorkbench();
+  const { auditTrail, auditLogs } = useWorkbench();
+  const rawLogs = auditTrail || auditLogs || [];
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedActionFilter, setSelectedActionFilter] = useState('ALL');
 
-  const filteredLogs = auditLogs.filter((log) => {
+  const filteredLogs = rawLogs.filter((log) => {
+    const action = log.action || '';
+    const description = log.description || (log as any).details || '';
+    const actor = log.actorName || (log as any).userName || '';
+    const entity = log.entityId || (log as any).batchId || '';
+
     const matchesSearch =
-      log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.details.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (log.batchId && log.batchId.toLowerCase().includes(searchTerm.toLowerCase()));
+      action.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      actor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      entity.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesAction =
-      selectedActionFilter === 'ALL' || log.action === selectedActionFilter;
+      selectedActionFilter === 'ALL' || action === selectedActionFilter;
 
     return matchesSearch && matchesAction;
   });
 
   const exportAuditTrailJson = () => {
-    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(auditLogs, null, 2));
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(rawLogs, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute('href', dataStr);
     downloadAnchor.setAttribute('download', `helix-audit-trail-21cfrpart11-${new Date().toISOString()}.json`);
@@ -140,30 +146,30 @@ export const AuditTrailView: React.FC = () => {
 
                   {/* User */}
                   <td className="py-3 px-3.5">
-                    <div className="font-semibold text-slate-200">{log.userName}</div>
-                    <div className="text-[10px] text-purple-300 font-mono">{log.role}</div>
+                    <div className="font-semibold text-slate-200">{log.actorName || (log as any).userName || 'System'}</div>
+                    <div className="text-[10px] text-purple-300 font-mono">{log.actorRole || (log as any).role || 'SYSTEM'}</div>
                   </td>
 
                   {/* Target */}
                   <td className="py-3 px-3.5 font-mono text-[11px] text-cyan-300">
-                    {log.batchId || 'SYSTEM'}
+                    {log.entityId || (log as any).batchId || 'SYSTEM'}
                   </td>
 
                   {/* Details */}
                   <td className="py-3 px-3.5 text-slate-300 text-[11px] max-w-sm leading-relaxed">
-                    <div>{log.details}</div>
-                    {log.digitalSignatureReason && (
+                    <div>{log.description || (log as any).details}</div>
+                    {(log.cfrPart11SignatureReason || (log as any).digitalSignatureReason) && (
                       <div className="text-[10px] text-emerald-400 font-mono mt-0.5">
-                        Sig Reason: "{log.digitalSignatureReason}"
+                        Sig Reason: "{log.cfrPart11SignatureReason || (log as any).digitalSignatureReason}"
                       </div>
                     )}
                   </td>
 
                   {/* Hash */}
                   <td className="py-3 px-3.5 font-mono text-[10px] text-slate-500">
-                    <div className="flex items-center gap-1 truncate max-w-[120px]" title={log.hash}>
+                    <div className="flex items-center gap-1 truncate max-w-[120px]" title={log.sha256Checksum || (log as any).hash}>
                       <Hash className="w-3 h-3 text-emerald-500 flex-shrink-0" />
-                      <span className="text-emerald-400">{log.hash.slice(0, 12)}...</span>
+                      <span className="text-emerald-400">{(log.sha256Checksum || (log as any).hash || '000000000000').slice(0, 12)}...</span>
                     </div>
                   </td>
                 </tr>

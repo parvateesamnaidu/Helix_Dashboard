@@ -12,7 +12,7 @@
 
 ### How to Access the Explainer Video:
 1. Launch the application in your browser (or open the live deployment URL).
-2. Click the **Explainer Video** tab (badged with `5 MIN`) on the top navigation bar, or click the **Explainer Video** button in the top header from any view.
+2. Click the **Explainer Video** tab (the last tab on the menu bar, badged with `5 MIN`), or click the **Explainer Video** button in the top header from any view.
 3. Use the interactive video player equipped with:
    - **Synchronous Web Speech AI narration** with speed controls (`0.75x` – `2.0x`), volume, and voice selection.
    - **Karaoke closed captions (CC)** synchronized with on-screen visual animations.

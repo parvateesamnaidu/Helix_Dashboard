@@ -14,7 +14,7 @@ import { AuditTrailView } from './views/AuditTrailView';
 import { AnimatedExplainerVideoView } from './views/AnimatedExplainerVideoView';
 
 function WorkbenchMain() {
-  const [activeTab, setActiveTab] = useState<TabId>('video');
+  const [activeTab, setActiveTab] = useState<TabId>('batches');
   const [isOAuthModalOpen, setIsOAuthModalOpen] = useState<boolean>(false);
 
   return (
