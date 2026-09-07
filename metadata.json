@@ -1,0 +1,6 @@
+{
+  "name": "Helix Orchestration Workbench",
+  "description": "Cell and gene therapy patient-to-batch orchestration workbench with chain-of-identity tracking, OAuth2 session security, cold-chain telemetry, and 21 CFR Part 11 release authority.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
